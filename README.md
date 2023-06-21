@@ -1,6 +1,6 @@
 # Limbo URL Picker
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md) [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.MultiNodeTreePicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker) [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker) [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.urlpicker)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md) [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker) [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker) [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.urlpicker)
 
 **Limbo.Umbraco.UrlPicker** adds a new property editor that extends Umbraco's default Multi URL Picker property editor by adding an extra **Converter** option.
 
