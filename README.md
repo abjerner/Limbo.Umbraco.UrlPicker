@@ -34,13 +34,13 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 The package targets Umbraco 10 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 1.0.0
+dotnet add package Limbo.Umbraco.UrlPicker --version 1.0.1
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.0
+Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.1
 ```
 
 
