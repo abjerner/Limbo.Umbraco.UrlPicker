@@ -23,7 +23,7 @@
     <PackageId>Limbo.Umbraco.UrlPicker</PackageId>
     <PackageTags>Skybrud, Limbo, URL, URLs, Picker, Umbraco, Umbraco-Marketplace</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/abjerner/Limbo.Umbraco.UrlPicker</PackageProjectUrl>
+    <PackageProjectUrl>https://packages.limbo.works/limbo.umbraco.urlpicker/v1/</PackageProjectUrl>
     <PackageIcon>Limbo.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/abjerner/Limbo.Umbraco.UrlPicker</RepositoryUrl>
