@@ -34,14 +34,87 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 The package targets Umbraco 10 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 1.0.1
+dotnet add package Limbo.Umbraco.UrlPicker --version 1.0.2
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.1
+Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.2
 ```
+
+
+
+<br /><br />
+
+## Usage
+
+Umbraco's default Multi URL Picker returns a single `Link` or a collection of `Link`. With **Limbo.Umbraco.UrlPicker**, the type for the link item can be controlled by implementing a custom converterer like in the example below, and then selecting the converter on your **Limbo URL Picker** data type.
+
+```csharp
+using Limbo.Umbraco.UrlPicker.Converters;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.PublishedContent;
+
+namespace UmbracoTen.Packages.UrlPicker {
+
+    public class LinkItemConverter : IUrlPickerConverter {
+
+        public string Name => "Link Item Converter";
+
+        public object? Convert(IPublishedElement owner, IPublishedPropertyType propertyType, Link? source) {
+            return source is null ? null : new LinkItem(source);
+        }
+
+        public Type GetType(IPublishedPropertyType propertyType) {
+            return typeof(LinkItem);
+        }
+
+    }
+
+}
+```
+
+```csharp
+using Newtonsoft.Json;
+using Skybrud.Essentials.Json.Newtonsoft.Converters.Enums;
+using Umbraco.Cms.Core.Models;
+
+namespace UmbracoTen.Packages.UrlPicker {
+
+    public class LinkItem {
+
+        #region Properties
+
+        public string? Name { get; }
+
+        public string? Url { get; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string? Target { get; }
+
+        [JsonConverter(typeof(EnumCamelCaseConverter))]
+        public LinkType Type { get; }
+
+        #endregion
+
+        #region Constructors
+
+        public LinkItem(Link link) {
+            Name = link.Name;
+            Url = link.Url;
+            Target = link.Target;
+            Type = link.Type;
+        }
+
+        #endregion
+
+    }
+
+}
+```
+
+
 
 
 
