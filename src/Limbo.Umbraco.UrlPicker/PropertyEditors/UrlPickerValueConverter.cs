@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Limbo.Umbraco.UrlPicker.Converters;
 using Newtonsoft.Json.Linq;
+using Skybrud.Essentials.Collections;
 using Skybrud.Essentials.Json.Extensions;
 using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.Models;
@@ -55,6 +56,7 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors {
             if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return value;
 
             return value switch {
+                null => config.MaxNumber == 0 ? null : ArrayUtils.Empty(converter.GetType(propertyType)),
                 Link link => converter.Convert(owner, propertyType, link),
                 IEnumerable<Link> links => links.Select(x => converter.Convert(owner, propertyType, x)),
                 _ => value
