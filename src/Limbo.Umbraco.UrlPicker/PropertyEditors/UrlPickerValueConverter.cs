@@ -55,7 +55,7 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors {
             if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return value;
 
             return value switch {
-                null => config.MaxNumber == 0 ? null : ArrayUtils.Empty(converter.GetType(propertyType)),
+                null => config.MaxNumber == 1 ? null : ArrayUtils.Empty(converter.GetType(propertyType)),
                 Link link => converter.Convert(owner, propertyType, link),
                 IEnumerable<Link> links => converter.ConvertList(owner, propertyType, links),
                 _ => value
