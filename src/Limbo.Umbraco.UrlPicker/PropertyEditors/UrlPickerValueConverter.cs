@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Limbo.Umbraco.UrlPicker.Converters;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Collections;
 using Skybrud.Essentials.Json.Extensions;
 using Umbraco.Cms.Core.Logging;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
@@ -22,9 +21,11 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors {
 
         #region Constructors
 
+        private readonly ILogger<UrlPickerValueConverter> _logger;
         private readonly UrlPickerConverterCollection _converterCollection;
 
-        public UrlPickerValueConverter(IPublishedSnapshotAccessor publishedSnapshotAccessor, IProfilingLogger profilingLogger, IJsonSerializer jsonSerializer, IUmbracoContextAccessor umbracoContextAccessor, IPublishedUrlProvider publishedUrlProvider, UrlPickerConverterCollection converterCollection) : base(publishedSnapshotAccessor, profilingLogger, jsonSerializer, umbracoContextAccessor, publishedUrlProvider) {
+        public UrlPickerValueConverter(ILogger<UrlPickerValueConverter> logger, IPublishedSnapshotAccessor publishedSnapshotAccessor, IProfilingLogger profilingLogger, IJsonSerializer jsonSerializer, IUmbracoContextAccessor umbracoContextAccessor, IPublishedUrlProvider publishedUrlProvider, UrlPickerConverterCollection converterCollection) : base(publishedSnapshotAccessor, profilingLogger, jsonSerializer, umbracoContextAccessor, publishedUrlProvider) {
+            _logger = logger;
             _converterCollection = converterCollection;
         }
 
@@ -51,15 +52,13 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors {
             string? key = GetConverterKey(config.Converter);
             if (string.IsNullOrWhiteSpace(key)) return value;
 
-            // Return "value" if item converter wasn't found
-            if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return value;
+            // If the converter is found, we use it to convert the value received from the base value converter
+            if (_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return converter.Convert(owner, propertyType, inter, config);
 
-            return value switch {
-                null => config.MaxNumber == 1 ? null : ArrayUtils.Empty(converter.GetType(propertyType)),
-                Link link => converter.Convert(owner, propertyType, link),
-                IEnumerable<Link> links => converter.ConvertList(owner, propertyType, links),
-                _ => value
-            };
+            // If a converter is specified, but isn't found, we write a debug message to the log, and return the value
+            // received from the base value converter
+            _logger.LogDebug("Converter with alias '{Alias}' not found.", key);
+            return value;
 
         }
 
@@ -76,7 +75,7 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors {
             // Return "value" if item converter wasn't found
             if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return base.GetPropertyValueType(propertyType);
 
-            Type type = converter.GetType(propertyType);
+            Type type = converter.GetType(propertyType, config);
 
             return single ? type : typeof(IEnumerable<>).MakeGenericType(type);
 
