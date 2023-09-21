@@ -34,13 +34,13 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 The package targets Umbraco 10+ and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 1.0.5
+dotnet add package Limbo.Umbraco.UrlPicker --version 1.1.0
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.5
+Install-Package Limbo.Umbraco.UrlPicker -Version 1.1.0
 ```
 
 
@@ -52,21 +52,23 @@ Install-Package Limbo.Umbraco.UrlPicker -Version 1.0.5
 Umbraco's default Multi URL Picker returns a single `Link` or a collection of `Link`. With **Limbo.Umbraco.UrlPicker**, the type for the link item can be controlled by implementing a custom converterer like in the example below, and then selecting the converter on your **Limbo URL Picker** data type.
 
 ```csharp
+using System;
 using Limbo.Umbraco.UrlPicker.Converters;
+using Limbo.Umbraco.UrlPicker.PropertyEditors;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace UmbracoTen.Packages.UrlPicker {
 
-    public class LinkItemConverter : IUrlPickerConverter {
+    public class LinkItemConverter : UrlPickerItemConverterBase {
 
-        public string Name => "Link Item Converter";
+        public LinkItemConverter() : base("Link Item Converter") {}
 
-        public object? Convert(IPublishedElement owner, IPublishedPropertyType propertyType, Link? source) {
-            return source is null ? null : new LinkItem(source);
+        protected override object? ConvertItem(IPublishedElement owner, IPublishedPropertyType propertyType, Link source, UrlPickerConfiguration config) {
+            return new LinkItem(source);
         }
 
-        public Type GetType(IPublishedPropertyType propertyType) {
+        protected override Type GetItemType(IPublishedPropertyType propertyType, UrlPickerConfiguration config) {
             return typeof(LinkItem);
         }
 
