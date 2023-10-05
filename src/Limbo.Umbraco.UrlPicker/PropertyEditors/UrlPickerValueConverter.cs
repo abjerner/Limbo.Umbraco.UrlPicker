@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Limbo.Umbraco.UrlPicker.Converters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -66,8 +65,6 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
 
         UrlPickerConfiguration config = propertyType.DataType.ConfigurationAs<UrlPickerConfiguration>()!;
 
-        bool single = config.MaxNumber == 1;
-
         // Get the key of the converter
         string? key = GetConverterKey(config.Converter);
         if (string.IsNullOrWhiteSpace(key)) return base.GetPropertyValueType(propertyType);
@@ -75,9 +72,8 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
         // Return "value" if item converter wasn't found
         if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return base.GetPropertyValueType(propertyType);
 
-        Type type = converter.GetType(propertyType, config);
-
-        return single ? type : typeof(IEnumerable<>).MakeGenericType(type);
+        // As of v1.0 is up to the converter to return the correct type (eg. if a single or multi picker)
+        return converter.GetType(propertyType, config);
 
     }
 
