@@ -52,7 +52,7 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
         if (string.IsNullOrWhiteSpace(key)) return value;
 
         // If the converter is found, we use it to convert the value received from the base value converter
-        if (_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return converter.Convert(owner, propertyType, inter, config);
+        if (_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return converter.Convert(owner, propertyType, value, config);
 
         // If a converter is specified, but isn't found, we write a debug message to the log, and return the value
         // received from the base value converter
