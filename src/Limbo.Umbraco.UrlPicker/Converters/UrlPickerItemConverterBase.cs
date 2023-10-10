@@ -87,13 +87,16 @@ public abstract class UrlPickerItemConverterBase : IUrlPickerConverter {
     /// <param name="config">The URL picker configuration.</param>
     /// <returns>A collection with converted items.</returns>
     public object? Convert(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, UrlPickerConfiguration config) {
+
         bool single = config.MaxNumber == 1;
+
         return source switch {
             null => single ? null : ArrayUtils.Empty(GetItemType(propertyType, config)),
             Link link => ConvertItem(owner, propertyType, link, config),
             IEnumerable<Link> links => ConvertList(owner, propertyType, links, config),
-            _ => source
+            _ => null
         };
+
     }
 
     /// <summary>
