@@ -67,7 +67,7 @@ public abstract class UrlPickerItemConverterBase : IUrlPickerConverter {
     /// <returns>An instance of <see cref="Type"/>.</returns>
     public Type GetType(IPublishedPropertyType propertyType, UrlPickerConfiguration config) {
         Type itemType = GetItemType(propertyType, config);
-        return config.MaxNumber == 1 ? itemType : typeof(IEnumerable<>).MakeGenericType(itemType);
+        return config.MaxNumber == 1 ? itemType : typeof(IReadOnlyList<>).MakeGenericType(itemType);
     }
 
     /// <summary>
