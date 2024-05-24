@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Strings.Extensions;
 using Umbraco.Cms.Core.PropertyEditors;
 
@@ -8,13 +8,13 @@ namespace Limbo.Umbraco.UrlPicker;
 
 internal static class UrlPickerUtils {
 
-    public static string? GetTypeName(Type type) {
-        return type.AssemblyQualifiedName is { } name ? GetTypeName(name) : null;
+    public static string GetTypeAlias(Type type) {
+        if (type.AssemblyQualifiedName is null) throw new PropertyNotSetException(nameof(type.AssemblyQualifiedName));
+        return GetTypeAlias(type.AssemblyQualifiedName);
     }
 
-    [return: NotNullIfNotNull("typeName")]
-    public static string? GetTypeName(string? typeName) {
-        return typeName?.Split(',').Take(2).Join(",");
+    public static string GetTypeAlias(string typeName) {
+        return typeName.Split(',').Take(2).Join(",");
     }
 
     public static void PrependLinkToDescription(ConfigurationField field, string text, string url) {

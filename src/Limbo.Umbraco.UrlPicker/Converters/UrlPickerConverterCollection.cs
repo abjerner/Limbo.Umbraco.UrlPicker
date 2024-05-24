@@ -21,12 +21,8 @@ public class UrlPickerConverterCollection : BuilderCollectionBase<IUrlPickerConv
         _lookup = new Dictionary<string, IUrlPickerConverter>(StringComparer.OrdinalIgnoreCase);
 
         foreach (IUrlPickerConverter item in this) {
-
-            string? typeName = UrlPickerUtils.GetTypeName(item.GetType());
-            if (typeName != null && _lookup.ContainsKey(typeName) == false) {
-                _lookup.Add(typeName, item);
-            }
-
+            string typeAlias = UrlPickerUtils.GetTypeAlias(item.GetType());
+            _lookup.TryAdd(typeAlias, item);
         }
 
     }

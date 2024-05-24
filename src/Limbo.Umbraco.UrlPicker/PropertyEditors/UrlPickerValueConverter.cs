@@ -1,8 +1,6 @@
 ﻿using System;
 using Limbo.Umbraco.UrlPicker.Converters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json.Extensions;
 using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.Models.PublishedContent;
@@ -48,16 +46,15 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
         // Return "value" if the data type isn't configured with a converter
         if (propertyType.DataType.Configuration is not UrlPickerConfiguration config) return value;
 
-        // Get the key of the converter
-        string? key = GetConverterKey(config.Converter);
-        if (string.IsNullOrWhiteSpace(key)) return value;
+        // Get the alias of the converter, if any
+        string? typeAlias = config.Converter?.Type;
 
         // If the converter is found, we use it to convert the value received from the base value converter
-        if (_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return converter.Convert(owner, propertyType, value, config);
+        if (typeAlias is not null && _converterCollection.TryGet(typeAlias, out IUrlPickerConverter? converter)) return converter.Convert(owner, propertyType, value, config);
 
         // If a converter is specified, but isn't found, we write a debug message to the log, and return the value
         // received from the base value converter
-        _logger.LogDebug("Converter with alias '{Alias}' not found.", key);
+        _logger.LogDebug("Converter with alias '{Alias}' not found.", typeAlias);
         return value;
 
     }
@@ -66,27 +63,18 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
 
         UrlPickerConfiguration config = propertyType.DataType.ConfigurationAs<UrlPickerConfiguration>()!;
 
-        // Get the key of the converter
-        string? key = GetConverterKey(config.Converter);
-        if (string.IsNullOrWhiteSpace(key)) return base.GetPropertyValueType(propertyType);
+        // Get the alias of the converter, if any
+        string? typeAlias = config.Converter?.Type;
 
-        // Return "value" if item converter wasn't found
-        if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return base.GetPropertyValueType(propertyType);
+        // Get the value type from the base method if a converter hasn't been selected
+        if (string.IsNullOrWhiteSpace(typeAlias)) return base.GetPropertyValueType(propertyType);
+
+        // Also get the value type from the base method if the converter isn't found
+        if (!_converterCollection.TryGet(typeAlias, out IUrlPickerConverter? converter)) return base.GetPropertyValueType(propertyType);
 
         // As of v1.0 it is up to the converter to return the correct type (e.g. if a single or multi picker)
         return converter.GetType(propertyType, config);
 
-    }
-
-    private static string? GetConverterKey(JToken? token) {
-        return token switch {
-            null => null,
-            JObject obj => obj.GetString("key"),
-            _ => token.Type switch {
-                JTokenType.String => token.ToString(),
-                _ => null
-            }
-        };
     }
 
     #endregion

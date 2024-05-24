@@ -28,7 +28,7 @@ public class UrlPickerController : UmbracoAuthorizedApiController {
 
         JObject json = new() {
             { "assembly", type.Assembly.FullName },
-            { "type", UrlPickerUtils.GetTypeName(type) },
+            { "type", UrlPickerUtils.GetTypeAlias(type) },
             { "icon", $"{converter.Icon ?? "icon-box"} color-{type.Assembly.FullName?.Split('.')[0].ToLower()}" },
             { "name", converter.Name },
             { "description", type.AssemblyQualifiedName?.Split([", Version"], StringSplitOptions.None)[0] + ".dll" }

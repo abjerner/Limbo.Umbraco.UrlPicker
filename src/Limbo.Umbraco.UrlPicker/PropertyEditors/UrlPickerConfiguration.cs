@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Limbo.Umbraco.UrlPicker.Models;
+using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Limbo.Umbraco.UrlPicker.PropertyEditors;
@@ -12,6 +13,6 @@ public class UrlPickerConfiguration : MultiUrlPickerConfiguration {
     /// Gets or sets an instance of <see cref="JObject"/> representing the information about the selected item converter.
     /// </summary>
     [ConfigurationField("converter", "Converter", "/App_Plugins/Limbo.Umbraco.UrlPicker/Views/Converter.html?v={version}", Description = "Select a converter to control the type of the items returned by properties of this data type.")]
-    public JToken? Converter { get; set; }
+    public UrlPickerConverter? Converter { get; set; }
 
 }
