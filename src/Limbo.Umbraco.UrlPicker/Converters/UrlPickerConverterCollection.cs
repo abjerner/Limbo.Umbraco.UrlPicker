@@ -13,7 +13,7 @@ public class UrlPickerConverterCollection : BuilderCollectionBase<IUrlPickerConv
     private readonly Dictionary<string, IUrlPickerConverter> _lookup;
 
     /// <summary>
-    /// Initializes an new instance based on the specified <paramref name="converters"/>.
+    /// Initializes a new instance based on the specified <paramref name="converters"/>.
     /// </summary>
     /// <param name="converters">The item converters that should make up the collection.</param>
     public UrlPickerConverterCollection(Func<IEnumerable<IUrlPickerConverter>> converters) : base(converters) {

@@ -3,6 +3,7 @@ using Limbo.Umbraco.UrlPicker.Converters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
+using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -23,7 +24,7 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
     private readonly ILogger<UrlPickerValueConverter> _logger;
     private readonly UrlPickerConverterCollection _converterCollection;
 
-    public UrlPickerValueConverter(ILogger<UrlPickerValueConverter> logger, IPublishedSnapshotAccessor publishedSnapshotAccessor, IProfilingLogger profilingLogger, IJsonSerializer jsonSerializer, IUmbracoContextAccessor umbracoContextAccessor, IPublishedUrlProvider publishedUrlProvider, UrlPickerConverterCollection converterCollection) : base(publishedSnapshotAccessor, profilingLogger, jsonSerializer, umbracoContextAccessor, publishedUrlProvider) {
+    public UrlPickerValueConverter(ILogger<UrlPickerValueConverter> logger, IPublishedSnapshotAccessor publishedSnapshotAccessor, IProfilingLogger profilingLogger, IJsonSerializer jsonSerializer, IUmbracoContextAccessor umbracoContextAccessor, IPublishedUrlProvider publishedUrlProvider, UrlPickerConverterCollection converterCollection, IApiContentNameProvider apiContentNameProvider, IApiMediaUrlProvider apiMediaUrlProvider, IApiContentRouteBuilder apiContentRouteBuilder) : base(publishedSnapshotAccessor, profilingLogger, jsonSerializer, umbracoContextAccessor, publishedUrlProvider, apiContentNameProvider, apiMediaUrlProvider, apiContentRouteBuilder) {
         _logger = logger;
         _converterCollection = converterCollection;
     }
@@ -72,7 +73,7 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
         // Return "value" if item converter wasn't found
         if (!_converterCollection.TryGet(key, out IUrlPickerConverter? converter)) return base.GetPropertyValueType(propertyType);
 
-        // As of v1.0 is up to the converter to return the correct type (eg. if a single or multi picker)
+        // As of v1.0 it is up to the converter to return the correct type (e.g. if a single or multi picker)
         return converter.GetType(propertyType, config);
 
     }

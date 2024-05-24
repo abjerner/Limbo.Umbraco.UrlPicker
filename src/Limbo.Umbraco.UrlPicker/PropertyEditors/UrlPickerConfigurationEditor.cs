@@ -20,7 +20,7 @@ public class UrlPickerConfigurationEditor : ConfigurationEditor<UrlPickerConfigu
                     UrlPickerUtils.PrependLinkToDescription(
                         field,
                         "See the documentation &rarr;",
-                        "https://packages.limbo.works/2e359b25"
+                        "https://packages.limbo.works/1b8ada3e"
                     );
                     break;
 

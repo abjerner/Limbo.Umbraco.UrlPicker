@@ -71,7 +71,7 @@ public abstract class UrlPickerItemConverterBase : IUrlPickerConverter {
     }
 
     /// <summary>
-    /// Returns a a common type for each item.
+    /// Returns a common type for each item.
     /// </summary>
     /// <param name="propertyType">The property type.</param>
     /// <param name="config">The URL picker configuration.</param>
@@ -119,7 +119,7 @@ public abstract class UrlPickerItemConverterBase : IUrlPickerConverter {
     /// <returns>A collection of converted items.</returns>
     protected object ConvertList(IPublishedElement owner, IPublishedPropertyType propertyType, IEnumerable<Link> source, UrlPickerConfiguration config) {
 
-        List<object> temp = new();
+        List<object> temp = [];
 
         foreach (Link link in source) {
             if (ConvertItem(owner, propertyType, link, config) is { } converted) temp.Add(converted);

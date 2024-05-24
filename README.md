@@ -4,6 +4,7 @@
 [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker)
 [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker)
 [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.urlpicker)
+[![Limbo.Umbraco.UrlPicker at packages.limbo.works](https://img.shields.io/badge/limbo-packages-blue)](https://packages.limbo.works/limbo.umbraco.urlpicker/)
 
 **Limbo.Umbraco.UrlPicker** adds a new property editor that extends Umbraco's default Multi URL Picker property editor by adding an extra **Converter** option.
 
@@ -16,11 +17,11 @@ The purpose of the converter is to control the C# type returned by the `.Value()
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
-    <td>Umbraco 10, 11 and 12</td>
+    <td>Umbraco 13</td>
   </tr>
   <tr>
     <td><strong>Target Framework:</strong></td>
-    <td>.NET 6</td>
+    <td>.NET 8</td>
   </tr>
 </table>
 
@@ -34,17 +35,23 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 
 ## Installation
 
-The package targets Umbraco 10+ and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
+### Umbraco 13
+
+The `v13.x` package targets Umbraco 13 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 1.1.1
+dotnet add package Limbo.Umbraco.UrlPicker --version 13.0.0-beta001
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 1.1.1
+Install-Package Limbo.Umbraco.UrlPicker -Version 13.0.0-beta001
 ```
+
+### Umbraco 10-12
+
+See the [**v1/main**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v1/main#installation) branch.
 
 
 

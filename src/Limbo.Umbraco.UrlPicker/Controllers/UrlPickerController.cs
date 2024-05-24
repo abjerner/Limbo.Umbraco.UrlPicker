@@ -31,7 +31,7 @@ public class UrlPickerController : UmbracoAuthorizedApiController {
             { "type", UrlPickerUtils.GetTypeName(type) },
             { "icon", $"{converter.Icon ?? "icon-box"} color-{type.Assembly.FullName?.Split('.')[0].ToLower()}" },
             { "name", converter.Name },
-            { "description", type.AssemblyQualifiedName?.Split(new[] { ", Version" }, StringSplitOptions.None)[0] + ".dll" }
+            { "description", type.AssemblyQualifiedName?.Split([", Version"], StringSplitOptions.None)[0] + ".dll" }
         };
 
         return json;
