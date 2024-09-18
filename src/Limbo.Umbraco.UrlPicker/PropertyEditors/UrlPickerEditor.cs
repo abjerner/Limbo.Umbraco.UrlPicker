@@ -6,7 +6,7 @@ using Umbraco.Cms.Core.Services;
 
 namespace Limbo.Umbraco.UrlPicker.PropertyEditors;
 
-[DataEditor(EditorAlias, "Limbo URL Picker", EditorView, ValueType = ValueTypes.Text, Group = "Limbo", Icon = "icon-link color-limbo")]
+[DataEditor(EditorAlias, "Limbo URL Picker", EditorView, ValueType = ValueTypes.Json, Group = "Limbo", Icon = "icon-link color-limbo")]
 public class UrlPickerEditor : MultiUrlPickerPropertyEditor {
 
     /// <summary>
