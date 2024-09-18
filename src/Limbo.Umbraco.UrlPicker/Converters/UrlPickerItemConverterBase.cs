@@ -125,7 +125,9 @@ public abstract class UrlPickerItemConverterBase : IUrlPickerConverter {
             if (ConvertItem(owner, propertyType, link, config) is { } converted) temp.Add(converted);
         }
 
-        return temp.Cast(GetItemType(propertyType, config));
+        Type itemType = GetItemType(propertyType, config);
+
+        return temp.Cast(itemType).ToList(itemType);
 
     }
 
