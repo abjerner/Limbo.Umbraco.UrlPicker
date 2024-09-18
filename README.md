@@ -40,13 +40,13 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 The `v13.x` package targets Umbraco 13 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 13.0.0-beta001
+dotnet add package Limbo.Umbraco.UrlPicker --version 13.0.0-beta002
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 13.0.0-beta001
+Install-Package Limbo.Umbraco.UrlPicker -Version 13.0.0-beta002
 ```
 
 ### Umbraco 10-12
