@@ -1,5 +1,4 @@
-﻿using Limbo.Umbraco.UrlPicker.Models;
-using Newtonsoft.Json.Linq;
+using Limbo.Umbraco.UrlPicker.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Limbo.Umbraco.UrlPicker.PropertyEditors;
@@ -9,10 +8,14 @@ namespace Limbo.Umbraco.UrlPicker.PropertyEditors;
 /// </summary>
 public class UrlPickerConfiguration : MultiUrlPickerConfiguration {
 
+    // [CHANGE: Umbraco 13 -> 17 upgrade] ConfigurationField now only carries the key. The label, description and
+    // editor UI of the field are declared in the client manifest instead (Client/src/property-editor/manifests.ts).
+    // Related: documentation/UMBRACO-17-UPGRADE.md
+
     /// <summary>
-    /// Gets or sets an instance of <see cref="JObject"/> representing the information about the selected item converter.
+    /// Gets or sets the information about the selected item converter.
     /// </summary>
-    [ConfigurationField("converter", "Converter", "/App_Plugins/Limbo.Umbraco.UrlPicker/Views/Converter.html?v={version}", Description = "Select a converter to control the type of the items returned by properties of this data type.")]
+    [ConfigurationField("converter")]
     public UrlPickerConverter? Converter { get; set; }
 
 }
