@@ -1,6 +1,6 @@
 # Limbo URL Picker
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/blob/v1/main/LICENSE.md)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/blob/v17/main/LICENSE.md)
 [![NuGet](https://img.shields.io/nuget/vpre/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker)
 [![NuGet](https://img.shields.io/nuget/dt/Limbo.Umbraco.UrlPicker.svg)](https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker)
 [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/limbo.umbraco.urlpicker)
@@ -13,7 +13,7 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 <table>
   <tr>
     <td><strong>License:</strong></td>
-    <td><a href="./LICENSE.md"><strong>MIT License</strong></a></td>
+    <td><a href="https://github.com/abjerner/Limbo.Umbraco.UrlPicker/blob/v17/main/LICENSE.md"><strong>MIT License</strong></a></td>
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
@@ -37,25 +37,22 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 
 ### Umbraco 17
 
-The `v17.x` package targets Umbraco 17 and is only available via [**NuGet**][NuGetPackage]. It is currently pre-release, so remember `--prerelease` / `-IncludePrerelease` when resolving it by range. To install the package, you can use either .NET CLI
+The `v17.x` package targets Umbraco 17 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 17.0.0-alpha000
+dotnet add package Limbo.Umbraco.UrlPicker --version 17.0.0-alpha001
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 17.0.0-alpha000
+Install-Package Limbo.Umbraco.UrlPicker -Version 17.0.0-alpha001
 ```
 
-### Umbraco 13
+### Other versions of Umbraco
 
-See the [**v13/main**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v13/main#installation) branch.
-
-### Umbraco 10-12
-
-See the [**v1/main**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v1/main#installation) branch.
+- [**`v13/main`**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v13/main#installation) Umbraco 13
+- ~~[**`v1/main`**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v1/main#installation) Umbraco 10, 11 and 12~~ <sub title="Umbraco 10, 11 and 12 have reached end-of-life"><sup>(EOL)</sup></sub>
 
 
 
