@@ -87,7 +87,7 @@ public class UrlPickerPackageManifestReader : IPackageManifestReader {
                             Alias = "converter",
                             Label = "Converter",
                             Description = "Select a converter to control the type of the items returned by properties of this data type.<br /><br />" +
-                                CreateButton("https://packages.limbo.works/1b8ada3e", "See the documentation"),
+                                CreateButton("https://packages.limbo.works/836c6402", "See the documentation"),
                             PropertyEditorUiAlias = UrlPickerPropertyEditorUiAliases.Converter,
                         },
                     ],

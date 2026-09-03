@@ -21,4 +21,4 @@ export const LIMBO_URL_PICKER_API_PATH = "/umbraco/management/api/v1/limbo/url-p
 /**
  * Documentation for the "Converter" data type option.
  */
-export const LIMBO_URL_PICKER_DOCS_URL = "https://packages.limbo.works/1b8ada3e";
+export const LIMBO_URL_PICKER_DOCS_URL = "https://packages.limbo.works/836c6402";
