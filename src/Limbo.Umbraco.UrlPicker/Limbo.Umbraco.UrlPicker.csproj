@@ -11,15 +11,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>17.0.0</VersionPrefix>
-    <!-- Pre-release suffix for the Umbraco 17 line — packs as Limbo.Umbraco.UrlPicker.17.0.0-alpha000.nupkg -->
-    <VersionSuffix>alpha000</VersionSuffix>
-    <VersionSuffix Condition="'$(Configuration)'=='Debug'">alpha000.build$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
+    <VersionPrefix>17.0.0-alpha000</VersionPrefix>
+    <VersionSuffix Condition="'$(Configuration)'=='Debug'">build$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
     <Company>Limbo</Company>
     <Product>Limbo URL Picker</Product>
     <Authors>Anders Bjerner</Authors>
     <Copyright>Copyright © $([System.DateTime]::UtcNow.ToString(`yyyy`))</Copyright>
     <Title>Limbo URL Picker</Title>
+    <Product>Limbo URL Picker</Product>
     <AssemblyTitle>Limbo URL Picker</AssemblyTitle>
     <Description>Custom URL picker for Umbraco.</Description>
   </PropertyGroup>
