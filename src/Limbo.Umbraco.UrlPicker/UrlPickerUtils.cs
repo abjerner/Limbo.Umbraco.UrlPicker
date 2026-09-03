@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Linq;
 using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Strings.Extensions;
-using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Limbo.Umbraco.UrlPicker;
+
+// [CHANGE: Umbraco 13 -> 17 upgrade] PrependLinkToDescription was removed — ConfigurationField no longer has a
+// Description, and the documentation link now lives in the client manifest. Related: documentation/UMBRACO-17-UPGRADE.md
 
 internal static class UrlPickerUtils {
 
@@ -15,11 +17,6 @@ internal static class UrlPickerUtils {
 
     public static string GetTypeAlias(string typeName) {
         return typeName.Split(',').Take(2).Join(",");
-    }
-
-    public static void PrependLinkToDescription(ConfigurationField field, string text, string url) {
-        string a = $"<a href=\"{url}\" class=\"btn btn-primary btn-xs limbo-urlpicker-button\" target=\"_blank\" rel=\"noreferrer noopener\">{text}</a>";
-        field.Description = $"{a}\r\n{field.Description}";
     }
 
 }

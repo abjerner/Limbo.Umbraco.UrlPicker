@@ -17,11 +17,11 @@ The purpose of the converter is to control the C# type returned by the `.Value()
   </tr>
   <tr>
     <td><strong>Umbraco:</strong></td>
-    <td>Umbraco 13</td>
+    <td>Umbraco 17</td>
   </tr>
   <tr>
     <td><strong>Target Framework:</strong></td>
-    <td>.NET 8</td>
+    <td>.NET 10</td>
   </tr>
 </table>
 
@@ -35,19 +35,23 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 
 ## Installation
 
-### Umbraco 13
+### Umbraco 17
 
-The `v13.x` package targets Umbraco 13 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
+The `v17.x` package targets Umbraco 17 and is only available via [**NuGet**][NuGetPackage]. It is currently pre-release, so remember `--prerelease` / `-IncludePrerelease` when resolving it by range. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 13.0.0
+dotnet add package Limbo.Umbraco.UrlPicker --version 17.0.0-alpha000
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 13.0.0
+Install-Package Limbo.Umbraco.UrlPicker -Version 17.0.0-alpha000
 ```
+
+### Umbraco 13
+
+See the [**v13/main**](https://github.com/abjerner/Limbo.Umbraco.UrlPicker/tree/v13/main#installation) branch.
 
 ### Umbraco 10-12
 
@@ -88,8 +92,7 @@ namespace UmbracoTen.Packages.UrlPicker {
 ```
 
 ```csharp
-using Newtonsoft.Json;
-using Skybrud.Essentials.Json.Newtonsoft.Converters.Enums;
+using System.Text.Json.Serialization;
 using Umbraco.Cms.Core.Models;
 
 namespace UmbracoTen.Packages.UrlPicker {
@@ -102,10 +105,10 @@ namespace UmbracoTen.Packages.UrlPicker {
 
         public string? Url { get; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Target { get; }
 
-        [JsonConverter(typeof(EnumCamelCaseConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public LinkType Type { get; }
 
         #endregion
@@ -126,9 +129,27 @@ namespace UmbracoTen.Packages.UrlPicker {
 }
 ```
 
+> **Note:** `JsonStringEnumConverter` writes the enum member name verbatim — `"Content"`, `"Media"`, `"External"`. The Umbraco 13 version of this sample used `Skybrud.Essentials`' `EnumCamelCaseConverter`, which wrote `"content"`, `"media"` and `"external"` instead. If your frontend relies on the lowercase form, reference a camel cased converter instead:
+>
+> ```csharp
+> public class CamelCaseEnumConverter() : JsonStringEnumConverter(JsonNamingPolicy.CamelCase);
+> ```
 
 
 
+<br /><br />
+
+## Building from source
+
+The backoffice part of the package is a TypeScript/Lit extension living in `src/Limbo.Umbraco.UrlPicker/Client`, so **Node.js 20+** is required to build the package. `dotnet build` runs `npm install` and `npm run build` for you and emits the result to `src/Limbo.Umbraco.UrlPicker/wwwroot/App_Plugins/Limbo.Umbraco.UrlPicker`.
+
+```
+dotnet build src/Limbo.Umbraco.UrlPicker
+```
+
+Pass `-p:SkipClientBuild=true` to build the C# only. Note that a package built that way will not contain the backoffice assets.
+
+See [**documentation/UMBRACO-17-UPGRADE.md**](./documentation/UMBRACO-17-UPGRADE.md) for what changed when the package was moved from Umbraco 13 to Umbraco 17.
 
 
 

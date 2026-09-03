@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Limbo.Umbraco.UrlPicker.PropertyEditors;
+// [CHANGE: Umbraco 13 -> 17 upgrade] Skybrud.Essentials moved the non-generic Cast/ToList helpers to the
+// Collections.Enumerables.Extensions namespace. Related: documentation/UMBRACO-17-UPGRADE.md
 using Skybrud.Essentials.Collections;
-using Skybrud.Essentials.Collections.Extensions;
+using Skybrud.Essentials.Collections.Enumerables.Extensions;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 

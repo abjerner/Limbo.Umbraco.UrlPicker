@@ -1,11 +1,14 @@
-﻿using System;
+using System;
 using Limbo.Umbraco.UrlPicker.PropertyEditors;
-using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 
 namespace Limbo.Umbraco.UrlPicker.Converters;
+
+// [CHANGE: Umbraco 13 -> 17 upgrade] Newtonsoft [JsonProperty] attributes removed — converters are no longer
+// serialized directly; the management API projects them onto UrlPickerConverterModel instead.
+// Related: documentation/UMBRACO-17-UPGRADE.md
 
 /// <summary>
 /// Interface describing an item converter.
@@ -15,13 +18,11 @@ public interface IUrlPickerConverter {
     /// <summary>
     /// Gets the friendly name of the item converter.
     /// </summary>
-    [JsonProperty("name")]
     string Name { get; }
 
     /// <summary>
     /// Gets the icon of the item converter.
     /// </summary>
-    [JsonProperty("icon")]
     public string? Icon => null;
 
     /// <summary>

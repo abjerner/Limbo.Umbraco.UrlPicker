@@ -19,6 +19,15 @@ public static class UrlPickerPackage {
     /// </summary>
     public const string Name = "Limbo URL Picker";
 
+    // [CHANGE: Umbraco 13 -> 17 upgrade] The package now exposes its own management API, so the API name used for
+    // Swagger grouping and [MapToApi] lives here. Related: documentation/UMBRACO-17-UPGRADE.md
+
+    /// <summary>
+    /// Gets the name of the management API of this package. The Swagger document for the API is available at
+    /// <c>/umbraco/swagger/limbo-urlpicker/swagger.json</c>.
+    /// </summary>
+    public const string ApiName = "limbo-urlpicker";
+
     /// <summary>
     /// Gets the version of the package.
     /// </summary>

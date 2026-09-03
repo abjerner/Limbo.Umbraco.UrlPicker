@@ -1,9 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using Limbo.Umbraco.UrlPicker.Converters;
-using Limbo.Umbraco.UrlPicker.Json.Newtonsoft;
-using Newtonsoft.Json;
+using Limbo.Umbraco.UrlPicker.Json.SystemTextJson;
 
 namespace Limbo.Umbraco.UrlPicker.Models;
+
+// [CHANGE: Umbraco 13 -> 17 upgrade] Newtonsoft attributes replaced by System.Text.Json equivalents.
+// Related: documentation/UMBRACO-17-UPGRADE.md
 
 /// <summary>
 /// Class describing a selected converter.
@@ -20,7 +22,6 @@ public class UrlPickerConverter {
     /// Initializes a new instance with the specified <paramref name="type"/>.
     /// </summary>
     /// <param name="type">The alias of the item converter type.</param>
-    [SetsRequiredMembers]
     public UrlPickerConverter(string type) {
         Type = type;
     }
