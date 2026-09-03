@@ -17,6 +17,8 @@ public class UrlPickerEditor : MultiUrlPickerPropertyEditor {
     /// </summary>
     public const string EditorAlias = "Limbo.Umbraco.UrlPicker";
 
+    public const string EditorUiAlias = "Limbo.Umbraco.UrlPicker.PropertyEditorUi";
+
     private readonly IIOHelper _ioHelper;
 
     public UrlPickerEditor(IIOHelper ioHelper, IDataValueEditorFactory dataValueEditorFactory) : base(ioHelper, dataValueEditorFactory) {

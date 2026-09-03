@@ -2,29 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Asp.Versioning;
+using Limbo.Umbraco.UrlPicker.Api;
 using Limbo.Umbraco.UrlPicker.Converters;
 using Limbo.Umbraco.UrlPicker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Api.Common.Attributes;
+using Umbraco.Cms.Api.Management.Routing;
 using Umbraco.Cms.Web.Common.Authorization;
-using Umbraco.Cms.Web.Common.Routing;
 
 #pragma warning disable 1591
 
 namespace Limbo.Umbraco.UrlPicker.Controllers;
 
-// [CHANGE: Umbraco 13 -> 17 upgrade] UmbracoAuthorizedApiController and [PluginController] were removed in Umbraco
-// 14. This is now a management API controller routed at /umbraco/limbo/url-picker/api/v1/converter and grouped into
-// the package's own OpenAPI document. Related: documentation/UMBRACO-17-UPGRADE.md
-
 [ApiController]
-[BackOfficeRoute("limbo/url-picker/api/v{version:apiVersion}")]
+[VersionedApiBackOfficeRoute(UrlPickerApiConstants.Route)]
 [Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
-[MapToApi(UrlPickerPackage.ApiName)]
-[ApiVersion("1.0")]
-[ApiExplorerSettings(GroupName = UrlPickerPackage.ApiName)]
+[MapToApi(UrlPickerApiConstants.Alias)]
+[ApiVersion(UrlPickerApiConstants.Version)]
+[ApiExplorerSettings(GroupName = UrlPickerApiConstants.GroupName)]
 public class UrlPickerController : ControllerBase {
 
     private readonly UrlPickerConverterCollection _converterCollection;
@@ -36,7 +33,7 @@ public class UrlPickerController : ControllerBase {
     /// <summary>
     /// Returns a list of the item converters available on the server.
     /// </summary>
-    [HttpGet("converter")]
+    [HttpGet("converters")]
     [ProducesResponseType(typeof(IEnumerable<UrlPickerConverterModel>), StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<UrlPickerConverterModel>> GetConverters() {
         return Ok(_converterCollection.Select(Map).ToList());

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- [CHANGE: Umbraco 13 -> 17 upgrade] Related: see documentation/UMBRACO-17-UPGRADE.md for the full list of touched files -->
-
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     <Nullable>enable</Nullable>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,9 +16,8 @@
     <Product>Limbo URL Picker</Product>
     <Authors>Anders Bjerner</Authors>
     <Copyright>Copyright © $([System.DateTime]::UtcNow.ToString(`yyyy`))</Copyright>
-    <Title>Limbo URL Picker</Title>
-    <Product>Limbo URL Picker</Product>
-    <AssemblyTitle>Limbo URL Picker</AssemblyTitle>
+    <Title>$(Product)</Title>
+    <AssemblyTitle>$(Product)</AssemblyTitle>
     <Description>Custom URL picker for Umbraco.</Description>
   </PropertyGroup>
 
@@ -36,77 +34,37 @@
 
   <!-- Include additional metadata in the assembly -->
   <ItemGroup>
+    <AssemblyMetadata Include="Authors" Value="$(Authors)" />
     <AssemblyMetadata Include="PackageProjectUrl" Value="https://packages.limbo.works/limbo.umbraco.urlpicker/" />
     <AssemblyMetadata Include="DocumentationUrl" Value="https://packages.limbo.works/limbo.umbraco.urlpicker/docs/v17/" />
     <AssemblyMetadata Include="NuGetUrl" Value="https://www.nuget.org/packages/Limbo.Umbraco.UrlPicker" />
     <AssemblyMetadata Include="UmbracoMarketplaceUrl" Value="https://marketplace.umbraco.com/package/limbo.umbraco.urlpicker" />
   </ItemGroup>
 
+  <!-- Ignore vulnerabilities from transient dependencies -->
+  <PropertyGroup>
+    <NuGetAuditMode>direct</NuGetAuditMode>
+  </PropertyGroup>
+
   <!-- Include NuGet dependencies -->
   <ItemGroup>
-    <PackageReference Include="Skybrud.Essentials" Version="1.1.68" />
-    <PackageReference Include="Umbraco.Cms.Core" Version="[17.0.0,17.999)" />
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="[17.0.0,17.999)" />
-    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[17.0.0,17.999)" />
-    <PackageReference Include="Umbraco.Cms.Api.Common" Version="[17.0.0,17.999)" />
-    <PackageReference Include="Umbraco.Cms.Api.Management" Version="[17.0.0,17.999)" />
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.69" />
+    <PackageReference Include="Skybrud.Essentials.Umbraco" Version="17.0.0-alpha008" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="[17.1.0,17.999)" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="[17.1.0,17.999)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[17.1.0,17.999)" />
+    <PackageReference Include="Umbraco.Cms.Api.Common" Version="[17.1.0,17.999)" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="[17.1.0,17.999)" />
   </ItemGroup>
 
   <!-- Include/exclude files for the NuGet package -->
   <ItemGroup>
     <Content Include="../build/Limbo.png" Pack="true" PackagePath="\" />
-
-    <!-- The client sources are build input only, and must never end up in the NuGet package -->
-    <ClientAssetsInputs Include="Client\**" Exclude="$(DefaultItemExcludes);Client\node_modules\**" />
-    <Content Remove="Client\**" />
-    <None Include="Client\public\umbraco-package.json" Pack="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <!-- Generate XML documentation -->
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
-
-  <!--
-    Builds the backoffice client (Vite + Lit) into wwwroot/App_Plugins/Limbo.Umbraco.UrlPicker.
-    Pass -p:SkipClientBuild=true to build the C# only, e.g. when Node.js is unavailable.
-  -->
-  <Target Name="RestoreClient" Condition="'$(SkipClientBuild)' != 'true'" Inputs="Client\package.json" Outputs="Client\node_modules\.package-lock.json">
-    <Message Importance="high" Text="Restoring client NPM packages..." />
-    <Exec Command="npm install" WorkingDirectory="Client" />
-  </Target>
-
-  <!--
-    [CHANGE: code review — BuildClient could be skipped while wwwroot/ was missing, packing an assetless .nupkg]
-    Related: Json/SystemTextJson/UrlPickerConverterJsonConverter.cs, README.md
-
-    The stamp file alone is not enough to decide whether the client is up to date: wwwroot/ is git ignored, so it can
-    disappear (a manual delete, a CI cache that keeps obj/ but not wwwroot/) while obj/client.complete.txt survives.
-    The target would then be skipped and the package would silently pack without any backoffice assets. Listing a
-    file that the client build actually produces as an output makes MSBuild re-run the build whenever it is missing.
-  -->
-  <Target Name="BuildClient" Condition="'$(SkipClientBuild)' != 'true'" BeforeTargets="ResolveProjectStaticWebAssets;AssignTargetPaths" DependsOnTargets="RestoreClient" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)client.complete.txt;wwwroot\App_Plugins\$(AssemblyName)\umbraco-package.json">
-    <Message Importance="high" Text="Executing client NPM build script..." />
-    <Exec Command="npm run build" WorkingDirectory="Client" />
-    <ItemGroup>
-      <_ClientAssetsBuildOutput Include="wwwroot\App_Plugins\**" />
-    </ItemGroup>
-    <WriteLinesToFile File="$(IntermediateOutputPath)client.complete.txt" Lines="@(_ClientAssetsBuildOutput)" Overwrite="true" />
-  </Target>
-
-  <!--
-    On a clean checkout wwwroot/ does not exist when the project is evaluated, so the SDK's "wwwroot/**" glob picks
-    up nothing and the backoffice assets would be silently missing from the NuGet package. Re-add whatever the
-    client build produced before static web assets are resolved.
-  -->
-  <Target Name="IncludeClientAssets" BeforeTargets="ResolveProjectStaticWebAssets;AssignTargetPaths" DependsOnTargets="BuildClient">
-    <ItemGroup>
-      <Content Include="wwwroot\**" Exclude="@(Content)" />
-    </ItemGroup>
-  </Target>
 
 </Project>
