@@ -4,6 +4,6 @@ namespace Limbo.Umbraco.UrlPicker.Constants;
 
 public class UrlPickerPropertyEditorAliases {
 
-    public const string UrlPicker = UrlPickerEditor.EditorAlias;
+    public const string UrlPicker = UrlPickerPropertyEditor.EditorAlias;
 
 }

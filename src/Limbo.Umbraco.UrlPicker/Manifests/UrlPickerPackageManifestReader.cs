@@ -54,9 +54,9 @@ public class UrlPickerPackageManifestReader : IPackageManifestReader {
 
         yield return new PropertyEditorSchemaExtension {
             Name = $"{Name}: URL Picker Property Editor Schema",
-            Alias = UrlPickerEditor.EditorAlias,
+            Alias = UrlPickerPropertyEditor.EditorAlias,
             Meta = new PropertyEditorSchemaMeta {
-                DefaultPropertyEditorUiAlias = UrlPickerEditor.EditorUiAlias,
+                DefaultPropertyEditorUiAlias = UrlPickerPropertyEditor.EditorUiAlias,
                 Settings = new PropertyEditorSettings {
                     Properties = [
                         new PropertyEditorSettingsProperty {
@@ -99,15 +99,15 @@ public class UrlPickerPackageManifestReader : IPackageManifestReader {
             }
         };
 
-        yield return new PropertyEditorUiExtension() {
+        yield return new PropertyEditorUiExtension {
             Alias = UrlPickerPropertyEditorUiAliases.UrlPicker,
             Name = $"{Name}: URL Picker Property Editor UI",
             Element = $"/App_Plugins/{Alias}/Elements/UrlPicker.js",
             Meta = new PropertyEditorUiMeta {
-                Label = "Limbo URL Picker",
+                Label = UrlPickerPropertyEditor.EditorName,
                 PropertyEditorSchemaAlias = UrlPickerPropertyEditorAliases.UrlPicker,
-                Icon = "icon-link",
-                Group = "Limbo",
+                Icon = UrlPickerPropertyEditor.EditorIcon,
+                Group = UrlPickerPropertyEditor.EditorGroup,
                 SupportsReadOnly = true,
                 Settings = new PropertyEditorSettings {
                     Properties = [

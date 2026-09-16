@@ -36,7 +36,7 @@ public class UrlPickerValueConverter : MultiUrlPickerValueConverter {
     #region Member methods
 
     public override bool IsConverter(IPublishedPropertyType propertyType) {
-        return propertyType.EditorAlias.Equals(UrlPickerEditor.EditorAlias);
+        return propertyType.EditorAlias.Equals(UrlPickerPropertyEditor.EditorAlias);
     }
 
     // [CHANGE: Umbraco 13 -> 17 upgrade] The GetPropertyCacheLevel override was removed — PropertyCacheLevel.Snapshot
