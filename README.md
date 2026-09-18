@@ -40,13 +40,13 @@ The purpose of the converter is to control the C# type returned by the `.Value()
 The `v17.x` package targets Umbraco 17 and is only available via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI
 
 ```
-dotnet add package Limbo.Umbraco.UrlPicker --version 17.0.0-alpha001
+dotnet add package Limbo.Umbraco.UrlPicker --version 17.0.0-alpha002
 ```
 
 or the NuGet Package Manager:
 
 ```
-Install-Package Limbo.Umbraco.UrlPicker -Version 17.0.0-alpha001
+Install-Package Limbo.Umbraco.UrlPicker -Version 17.0.0-alpha002
 ```
 
 ### Other versions of Umbraco

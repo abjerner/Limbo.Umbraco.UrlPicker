@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>17.0.0-alpha001</VersionPrefix>
+    <VersionPrefix>17.0.0-alpha002</VersionPrefix>
     <VersionSuffix Condition="'$(Configuration)'=='Debug'">build$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
     <Company>Limbo</Company>
     <Product>Limbo URL Picker</Product>
@@ -18,7 +18,7 @@
     <Copyright>Copyright © $([System.DateTime]::UtcNow.ToString(`yyyy`))</Copyright>
     <Title>$(Product)</Title>
     <AssemblyTitle>$(Product)</AssemblyTitle>
-    <Description>Custom URL picker for Umbraco.</Description>
+    <Description>Extended URL picker property editor for Umbraco.</Description>
   </PropertyGroup>
 
   <!-- Information for the NuGet package -->
