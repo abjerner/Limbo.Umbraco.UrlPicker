@@ -105,7 +105,7 @@ public class UrlPickerPackageManifestReader : IPackageManifestReader {
             Element = $"/App_Plugins/{Alias}/Elements/UrlPicker.js",
             Meta = new PropertyEditorUiMeta {
                 Label = UrlPickerPropertyEditor.EditorName,
-                PropertyEditorSchemaAlias = UrlPickerPropertyEditorAliases.UrlPicker,
+                PropertyEditorSchemaAlias = UrlPickerPropertyEditorSchemaAliases.UrlPicker,
                 Icon = UrlPickerPropertyEditor.EditorIcon,
                 Group = UrlPickerPropertyEditor.EditorGroup,
                 SupportsReadOnly = true,
