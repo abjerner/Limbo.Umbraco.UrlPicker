@@ -125,6 +125,9 @@ export class LimboUrlPickerConverterElement extends UmbLitElement {
 					value: converter.type,
 				})),
 			},
+			modal: {
+				size: "medium"
+			}
 		}).catch(() => undefined);
 
 		if (!picked?.value) return;
